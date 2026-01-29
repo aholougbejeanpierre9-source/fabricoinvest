@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - FabricoInvest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-dark: #1f2937;
+            --color-light: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--color-light);
+        }
+
+        /* Login Screen */
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--color-primary), #7c3aed);
+        }
+
+        .login-box {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .login-box h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--color-dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: block;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            color: var(--color-primary);
+        }
+
+        .btn-logout {
+            background: var(--color-danger);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card h3 {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            color: #6b7280;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--color-primary);
+            border-bottom-color: var(--color-primary);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--color-light);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-approved {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-rejected {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-active {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-success {
+            background: var(--color-success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--color-danger);
+            color: white;
+        }
+
+        .btn-info {
+            background: var(--color-primary);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: #6b7280;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Settings */
+        .settings-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--color-dark);
+        }
+
+        .moov-info {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+        }
+
+        .moov-info strong {
+            color: #92400e;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #6b7280;
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .detail-value {
+            color: var(--color-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-box">
+            <h1>🏭 Admin FabricoInvest</h1>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Nom d'utilisateur</label>
+                    <input type="text" id="username" required placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+            <p style="margin-top: 1rem; text-align: center; color: #6b7280; font-size: 0.9rem;">
+                Par défaut: admin / admin123
+            </p>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <h2>🏭 FabricoInvest - Tableau de Bord</h2>
+            <button class="btn-logout" onclick="logout()">Déconnexion</button>
+        </nav>
+
+        <div class="container">
+            <!-- Statistics -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>Total Investi</h3>
+                    <div class="value" id="totalInvested">0 FCFA</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Investissements Actifs</h3>
+                    <div class="value" id="activeInvestments">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>En Attente</h3>
+                    <div class="value" id="pendingInvestments">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Total Clients</h3>
+                    <div class="value" id="totalClients">0</div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('pending')">En Attente</button>
+                <button class="tab" onclick="switchTab('active')">Actifs</button>
+                <button class="tab" onclick="switchTab('completed')">Terminés</button>
+                <button class="tab" onclick="switchTab('settings')">Paramètres</button>
+            </div>
+
+            <!-- Pending Investments -->
+            <div id="pendingTab" class="tab-content active">
+                <div class="table-container">
+                    <h3 style="margin-bottom: 1rem;">Demandes d'Investissement en Attente</h3>
+                    <table id="pendingTable">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Téléphone</th>
+                                <th>Plan</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pendingTableBody">
+                            <tr>
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <div class="empty-state-icon">📋</div>
+                                        <p>Aucune demande en attente</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Active Investments -->
+            <div id="activeTab" class="tab-content">
+                <div class="table-container">
+                    <h3 style="margin-bottom: 1rem;">Investissements Actifs</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Plan</th>
+                                <th>Montant</th>
+                                <th>Gains/Jour</th>
+                                <th>Jours Restants</th>
+                                <th>Total Gains</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeTableBody">
+                            <tr>
+                                <td colspan="7">
+                                    <div class="empty-state">
+                                        <div class="empty-state-icon">💼</div>
+                                        <p>Aucun investissement actif</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Completed Investments -->
+            <div id="completedTab" class="tab-content">
+                <div class="table-container">
+                    <h3 style="margin-bottom: 1rem;">Investissements Terminés</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Plan</th>
+                                <th>Montant Investi</th>
+                                <th>Total Gains</th>
+                                <th>Date Fin</th>
+                                <th>Statut Paiement</th>
+                            </tr>
+                        </thead>
+                        <tbody id="completedTableBody">
+                            <tr>
+                                <td colspan="6">
+                                    <div class="empty-state">
+                                        <div class="empty-state-icon">✅</div>
+                                        <p>Aucun investissement terminé</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Settings -->
+            <div id="settingsTab" class="tab-content">
+                <div class="settings-section">
+                    <h3>📱 Configuration Moov Money</h3>
+                    <div class="form-group">
+                        <label>Numéro Moov Money Principal</label>
+                        <input type="tel" id="moovNumber" placeholder="+225 07 XX XX XX XX" value="+225 07 00 00 00 00">
+                    </div>
+                    <div class="form-group">
+                        <label>Nom du Compte Moov</label>
+                        <input type="text" id="moovName" placeholder="FabricoInvest SARL" value="FabricoInvest">
+                    </div>
+                    <button class="btn btn-primary" onclick="saveSettings()">Enregistrer</button>
+                    
+                    <div class="moov-info">
+                        <strong>💡 Instructions pour les clients :</strong><br>
+                        1. Ouvrir l'application Moov Money<br>
+                        2. Choisir "Envoyer de l'argent"<br>
+                        3. Entrer le numéro : <strong id="displayMoovNumber">+225 07 00 00 00 00</strong><br>
+                        4. Montant : Selon le plan choisi<br>
+                        5. Envoyer une capture d'écran de la confirmation
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>🔐 Modifier le Mot de Passe</h3>
+                    <div class="form-group">
+                        <label>Nouveau mot de passe</label>
+                        <input type="password" id="newPassword" placeholder="••••••••">
+                    </div>
+                    <button class="btn btn-primary" onclick="changePassword()">Changer</button>
+                </div>
+
+                <div class="settings-section">
+                    <h3>📊 Statistiques</h3>
+                    <div class="detail-row">
+                        <div class="detail-label">Total Investi</div>
+                        <div class="detail-value" id="statTotalInvested">0 FCFA</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Total Payé en Gains</div>
+                        <div class="detail-value" id="statTotalPaid">0 FCFA</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Nombre de Clients</div>
+                        <div class="detail-value" id="statTotalClients">0</div>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>⚠️ Zone Dangereuse</h3>
+                    <button class="btn btn-danger" onclick="clearAllData()">Effacer toutes les données</button>
+                    <p style="margin-top: 0.5rem; color: #6b7280; font-size: 0.9rem;">
+                        Cette action est irréversible !
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Details Modal -->
+    <div id="detailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Détails de l'Investissement</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample data storage
+        let investments = JSON.parse(localStorage.getItem('investments')) || [];
+        let settings = JSON.parse(localStorage.getItem('settings')) || {
+            moovNumber: '+225 07 00 00 00 00',
+            moovName: 'FabricoInvest'
+        };
+
+        // Login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simple authentication (in production, use proper backend authentication)
+            if (username === 'admin' && password === 'admin123') {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('dashboard').classList.add('active');
+                loadDashboard();
+            } else {
+                alert('Identifiants incorrects !');
+            }
+        });
+
+        function logout() {
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('dashboard').classList.remove('active');
+        }
+
+        // Switch tabs
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tab + 'Tab').classList.add('active');
+        }
+
+        // Load dashboard data
+        function loadDashboard() {
+            updateStats();
+            loadPendingInvestments();
+            loadActiveInvestments();
+            loadCompletedInvestments();
+            loadSettings();
+        }
+
+        function updateStats() {
+            const totalInvested = investments
+                .filter(inv => inv.status === 'active')
+                .reduce((sum, inv) => sum + inv.amount, 0);
+            
+            const activeCount = investments.filter(inv => inv.status === 'active').length;
+            const pendingCount = investments.filter(inv => inv.status === 'pending').length;
+            const totalClients = new Set(investments.map(inv => inv.phone)).size;
+
+            document.getElementById('totalInvested').textContent = totalInvested.toLocaleString('fr-FR') + ' FCFA';
+            document.getElementById('activeInvestments').textContent = activeCount;
+            document.getElementById('pendingInvestments').textContent = pendingCount;
+            document.getElementById('totalClients').textContent = totalClients;
+        }
+
+        function loadPendingInvestments() {
+            const pending = investments.filter(inv => inv.status === 'pending');
+            const tbody = document.getElementById('pendingTableBody');
+            
+            if (pending.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                                <p>Aucune demande en attente</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = pending.map(inv => `
+                <tr>
+                    <td>${new Date(inv.date).toLocaleDateString('fr-FR')}</td>
+                    <td>${inv.name}</td>
+                    <td>${inv.phone}</td>
+                    <td>${inv.plan}</td>
+                    <td>${inv.amount.toLocaleString('fr-FR')} FCFA</td>
+                    <td><span class="badge badge-pending">En attente</span></td>
+                    <td class="action-buttons">
+                        <button class="btn-sm btn-success" onclick="approveInvestment('${inv.id}')">Approuver</button>
+                        <button class="btn-sm btn-danger" onclick="rejectInvestment('${inv.id}')">Rejeter</button>
+                        <button class="btn-sm btn-info" onclick="viewDetails('${inv.id}')">Détails</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function loadActiveInvestments() {
+            const active = investments.filter(inv => inv.status === 'active');
+            const tbody = document.getElementById('activeTableBody');
+            
+            if (active.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">💼</div>
+                                <p>Aucun investissement actif</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = active.map(inv => {
+                const daysRemaining = 180 - Math.floor((Date.now() - new Date(inv.startDate).getTime()) / (1000 * 60 * 60 * 24));
+                const totalGains = inv.dailyReturn * (180 - daysRemaining);
+                
+                return `
+                    <tr>
+                        <td>${inv.name}</td>
+                        <td>${inv.plan}</td>
+                        <td>${inv.amount.toLocaleString('fr-FR')} FCFA</td>
+                        <td>${inv.dailyReturn} FCFA</td>
+                        <td>${daysRemaining} jours</td>
+                        <td>${totalGains.toLocaleString('fr-FR')} FCFA</td>
+                        <td class="action-buttons">
+                            <button class="btn-sm btn-info" onclick="viewDetails('${inv.id}')">Voir</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function loadCompletedInvestments() {
+            const completed = investments.filter(inv => inv.status === 'completed');
+            const tbody = document.getElementById('completedTableBody');
+            
+            if (completed.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">✅</div>
+                                <p>Aucun investissement terminé</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = completed.map(inv => `
+                <tr>
+                    <td>${inv.name}</td>
+                    <td>${inv.plan}</td>
+                    <td>${inv.amount.toLocaleString('fr-FR')} FCFA</td>
+                    <td>${(inv.dailyReturn * 180).toLocaleString('fr-FR')} FCFA</td>
+                    <td>${new Date(inv.endDate).toLocaleDateString('fr-FR')}</td>
+                    <td><span class="badge badge-approved">Payé</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function loadSettings() {
+            document.getElementById('moovNumber').value = settings.moovNumber;
+            document.getElementById('moovName').value = settings.moovName;
+            document.getElementById('displayMoovNumber').textContent = settings.moovNumber;
+        }
+
+        function approveInvestment(id) {
+            if (!confirm('Confirmer l\'approbation de cet investissement ?')) return;
+            
+            const inv = investments.find(i => i.id === id);
+            if (inv) {
+                inv.status = 'active';
+                inv.startDate = new Date().toISOString();
+                localStorage.setItem('investments', JSON.stringify(investments));
+                alert('✅ Investissement approuvé !');
+                loadDashboard();
+            }
+        }
+
+        function rejectInvestment(id) {
+            if (!confirm('Rejeter cet investissement ?')) return;
+            
+            investments = investments.filter(i => i.id !== id);
+            localStorage.setItem('investments', JSON.stringify(investments));
+            alert('❌ Investissement rejeté');
+            loadDashboard();
+        }
+
+        function viewDetails(id) {
+            const inv = investments.find(i => i.id === id);
+            if (!inv) return;
+
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `
+                <div class="detail-row">
+                    <div class="detail-label">Client</div>
+                    <div class="detail-value">${inv.name}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Téléphone</div>
+                    <div class="detail-value">${inv.phone}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">${inv.email || 'Non fourni'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Plan</div>
+                    <div class="detail-value">${inv.plan}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Montant</div>
+                    <div class="detail-value">${inv.amount.toLocaleString('fr-FR')} FCFA</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Gains/Jour</div>
+                    <div class="detail-value">${inv.dailyReturn} FCFA</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Code Parrain</div>
+                    <div class="detail-value">${inv.referralCode || 'Aucun'}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value">${new Date(inv.date).toLocaleString('fr-FR')}</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Statut</div>
+                    <div class="detail-value"><span class="badge badge-${inv.status === 'pending' ? 'pending' : inv.status === 'active' ? 'active' : 'approved'}">${inv.status}</span></div>
+                </div>
+            `;
+
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('detailsModal').classList.remove('active');
+        }
+
+        function saveSettings() {
+            settings.moovNumber = document.getElementById('moovNumber').value;
+            settings.moovName = document.getElementById('moovName').value;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            document.getElementById('displayMoovNumber').textContent = settings.moovNumber;
+            alert('✅ Paramètres enregistrés !');
+        }
+
+        function changePassword() {
+            const newPassword = document.getElementById('newPassword').value;
+            if (!newPassword) {
+                alert('Veuillez entrer un nouveau mot de passe');
+                return;
+            }
+            alert('✅ Mot de passe changé ! (Fonctionnalité à implémenter avec un backend)');
+        }
+
+        function clearAllData() {
+            if (!confirm('⚠️ ATTENTION ! Cette action va supprimer TOUTES les données. Êtes-vous sûr ?')) return;
+            if (!confirm('Dernière confirmation : Vraiment supprimer tout ?')) return;
+            
+            localStorage.removeItem('investments');
+            investments = [];
+            alert('✅ Toutes les données ont été supprimées');
+            loadDashboard();
+        }
+
+        // Add sample data for demonstration
+        function addSampleData() {
+            if (investments.length === 0) {
+                investments = [
+                    {
+                        id: '1',
+                        name: 'Jean Kouassi',
+                        phone: '+225 07 12 34 56 78',
+                        email: 'jean@example.com',
+                        plan: 'Débutant',
+                        amount: 3000,
+                        dailyReturn: 125,
+                        referralCode: '',
+                        status: 'pending',
+                        date: new Date().toISOString()
+                    },
+                    {
+                        id: '2',
+                        name: 'Marie Diallo',
+                        phone: '+225 07 98 76 54 32',
+                        email: 'marie@example.com',
+                        plan: 'Standard',
+                        amount: 6000,
+                        dailyReturn: 250,
+                        referralCode: 'ABC123',
+                        status: 'active',
+                        date: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+                        startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()
+                    }
+                ];
+                localStorage.setItem('investments', JSON.stringify(investments));
+            }
+        }
+
+        // Initialize with sample data
+        addSampleData();
+    </script>
+</body>
+</html>

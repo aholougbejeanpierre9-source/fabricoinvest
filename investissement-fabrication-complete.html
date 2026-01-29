@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FabricoInvest - Investissez dans la Fabrication Locale</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-secondary: #7c3aed;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-dark: #1f2937;
+            --color-light: #f3f4f6;
+            --color-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-dark);
+            background: var(--color-light);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1rem 5%;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--color-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-primary);
+        }
+
+        .btn-nav {
+            background: var(--color-primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-nav:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+        .hero {
+            margin-top: 80px;
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 5px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            color: var(--color-dark);
+        }
+
+        .investment-calc {
+            margin-bottom: 2rem;
+        }
+
+        .calc-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .calc-row label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .calc-row input, .calc-row select {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .calc-row input:focus, .calc-row select:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .calc-result {
+            background: linear-gradient(135deg, var(--color-success), #059669);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .calc-result h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .calc-details {
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* About Manufacturing */
+        .about-manufacturing {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #6b7280;
+        }
+
+        .manufacturing-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .manufacturing-image {
+            background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+            height: 400px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+        }
+
+        .manufacturing-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .manufacturing-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .manufacturing-list li {
+            padding: 0.8rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .manufacturing-list li::before {
+            content: "✓";
+            background: var(--color-success);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Investment Plans */
+        .plans {
+            padding: 5rem 5%;
+            background: var(--color-light);
+        }
+
+        .plans-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 3px solid #e5e7eb;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .plan-card.featured {
+            border-color: var(--color-primary);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.15);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--color-warning);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .plan-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-return {
+            background: var(--color-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .plan-return .rate {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .plan-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .plan-features li {
+            padding: 0.7rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            color: var(--color-success);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .payment-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .payment-card {
+            background: linear-gradient(135deg, #10b981, #059669);
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            border: 3px solid #10b981;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+        }
+
+        .payment-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-card h4 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .payment-card p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+            margin-bottom: 1.5rem;
+        }
+
+        .moov-number {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: monospace;
+            margin: 1.5rem 0;
+        }
+
+        .payment-steps {
+            text-align: left;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+        }
+
+        .payment-steps li {
+            padding: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+        /* Referral Program */
+        .referral {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            color: white;
+        }
+
+        .referral-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .referral h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .referral-benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .referral-benefit {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .referral-benefit h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 5%;
+            background: var(--color-light);
+        }
+
+        .steps {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .step-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #9ca3af;
+        }
+
+        .modal-close:hover {
+            color: var(--color-dark);
+        }
+
+        .modal h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-primary);
+        }
+
+        .payment-methods-modal {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .payment-option {
+            border: 2px solid #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-option:hover {
+            border-color: var(--color-primary);
+            background: #f9fafb;
+        }
+
+        .payment-option.selected {
+            border-color: var(--color-primary);
+            background: #eff6ff;
+        }
+
+        .payment-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .referral-code {
+            background: var(--color-light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+
+        .success-message {
+            background: #d1fae5;
+            border: 2px solid var(--color-success);
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 3rem 5%;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-container, .manufacturing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+            }
+
+            .step-number {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">🏭</div>
+                FabricoInvest
+            </div>
+            <ul class="nav-links">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#entreprise">L'Entreprise</a></li>
+                <li><a href="#plans">Plans</a></li>
+                <li><a href="#paiement">Paiement</a></li>
+                <li><a href="#parrainage">Parrainage</a></li>
+                <li><a href="#" class="btn-nav" onclick="openInvestModal(event)">Investir</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="accueil">
+        <div class="hero-container">
+            <div>
+                <h1>Investissez dans la <span class="hero-highlight">Fabrication Locale</span></h1>
+                <p>Soutenez une entreprise de fabrication réelle et recevez des revenus réguliers. Accessible dès 3,000 FCFA avec des bonus de parrainage.</p>
+                <button class="btn-primary" onclick="openInvestModal(event)" style="width: 100%; max-width: 300px;">Commencer à Investir</button>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">125</span>
+                        <span class="stat-label">FCFA par jour / 3,000</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">2%</span>
+                        <span class="stat-label">Bonus parrainage</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5%</span>
+                        <span class="stat-label">Frais de retrait</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <h3>💰 Calculez vos gains</h3>
+                <div class="investment-calc">
+                    <div class="calc-row">
+                        <label>Montant (FCFA)</label>
+                        <input type="number" id="calcAmount" value="3000" min="3000" step="1000">
+                    </div>
+                    <div class="calc-row">
+                        <label>Durée</label>
+                        <select id="calcDuration">
+                            <option value="1">1 mois</option>
+                            <option value="3">3 mois</option>
+                            <option value="6" selected>6 mois</option>
+                            <option value="12">12 mois</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="calc-result">
+                    <p>Gains estimés</p>
+                    <h3 id="calcResult">22,500 FCFA</h3>
+                    <p class="calc-details" id="calcDetails">Soit 125 FCFA par jour ou 3,750 FCFA par mois</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Manufacturing -->
+    <section class="about-manufacturing" id="entreprise">
+        <div class="section-header">
+            <h2>Notre Entreprise de Fabrication</h2>
+            <p>Vos investissements financent directement une unité de production locale</p>
+        </div>
+        <div class="manufacturing-grid">
+            <div class="manufacturing-image">🏭</div>
+            <div class="manufacturing-content">
+                <h3>Une Entreprise Réelle et Rentable</h3>
+                <p>Nous sommes une entreprise de fabrication spécialisée dans la production de produits essentiels pour le marché local. Vos investissements nous permettent d'acheter des matières premières, de payer nos employés et d'augmenter notre capacité de production.</p>
+                
+                <ul class="manufacturing-list">
+                    <li>Unité de production certifiée et réglementée</li>
+                    <li>Contrats commerciaux établis avec des distributeurs</li>
+                    <li>Équipe de 25+ employés qualifiés</li>
+                    <li>Expansion continue grâce à vos investissements</li>
+                    <li>Transparence totale avec rapports mensuels</li>
+                </ul>
+
+                <p style="margin-top: 1.5rem;"><strong>Nos revenus proviennent de :</strong> La vente de nos produits manufacturés aux distributeurs locaux et régionaux. Une partie des bénéfices est redistribuée aux investisseurs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plans -->
+    <section class="plans" id="plans">
+        <div class="section-header">
+            <h2>Plans d'Investissement</h2>
+            <p>Choisissez la durée qui vous convient</p>
+        </div>
+        <div class="plans-grid">
+            <div class="plan-card">
+                <h3>Débutant</h3>
+                <div class="plan-return">
+                    <div class="rate">125 FCFA</div>
+                    <div style="color: #6b7280;">par jour</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Investissement: 3,000 FCFA</li>
+                    <li>Durée: 6 mois (180 jours)</li>
+                    <li>Gains quotidiens: 125 FCFA</li>
+                    <li>Total gains: 22,500 FCFA</li>
+                    <li>Frais de retrait: 5%</li>
+                    <li>Capital remboursé à la fin</li>
+                </ul>
+                <button class="btn-primary" onclick="openInvestModal(event, 'Débutant')" style="width: 100%;">Investir</button>
+            </div>
+
+            <div class="plan-card featured">
+                <div class="plan-badge">POPULAIRE</div>
+                <h3>Standard</h3>
+                <div class="plan-return">
+                    <div class="rate">250 FCFA</div>
+                    <div style="color: #6b7280;">par jour</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Investissement: 6,000 FCFA</li>
+                    <li>Durée: 6 mois (180 jours)</li>
+                    <li>Gains quotidiens: 250 FCFA</li>
+                    <li>Total gains: 45,000 FCFA</li>
+                    <li>Bonus parrainage: 2% (120 FCFA)</li>
+                    <li>Frais de retrait: 5%</li>
+                    <li>Retrait hebdomadaire possible</li>
+                </ul>
+                <button class="btn-primary" onclick="openInvestModal(event, 'Standard')" style="width: 100%;">Investir</button>
+            </div>
+
+            <div class="plan-card">
+                <h3>Premium</h3>
+                <div class="plan-return">
+                    <div class="rate">625 FCFA</div>
+                    <div style="color: #6b7280;">par jour</div>
+                </div>
+                <ul class="plan-features">
+                    <li>Investissement: 15,000 FCFA</li>
+                    <li>Durée: 6 mois (180 jours)</li>
+                    <li>Gains quotidiens: 625 FCFA</li>
+                    <li>Total gains: 112,500 FCFA</li>
+                    <li>Bonus parrainage: 3% (450 FCFA)</li>
+                    <li>Frais de retrait: 5%</li>
+                    <li>Support prioritaire 24/7</li>
+                    <li>Visite de l'usine incluse</li>
+                </ul>
+                <button class="btn-primary" onclick="openInvestModal(event, 'Premium')" style="width: 100%;">Investir</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Payment Methods -->
+    <section class="payment-methods" id="paiement">
+        <div class="section-header">
+            <h2>Méthode de Paiement</h2>
+            <p>Déposez facilement via Moov Money</p>
+        </div>
+        <div class="payment-grid">
+            <div class="payment-card">
+                <div class="payment-icon">📱</div>
+                <h4>Moov Money - Paiement Instantané</h4>
+                <p>Envoyez votre investissement directement sur notre compte Moov Money officiel</p>
+                
+                <div class="moov-number">
+                    +225 07 00 00 00 00
+                </div>
+                
+                <p style="font-size: 0.95rem; margin-bottom: 1.5rem;">
+                    <strong>Nom du compte :</strong> FabricoInvest
+                </p>
+
+                <div class="payment-steps">
+                    <strong style="display: block; margin-bottom: 1rem; font-size: 1.1rem;">📋 Comment payer :</strong>
+                    <ol style="padding-left: 1.5rem;">
+                        <li>Ouvrez votre application Moov Money</li>
+                        <li>Sélectionnez "Envoyer de l'argent"</li>
+                        <li>Entrez le numéro : <strong>+225 07 00 00 00 00</strong></li>
+                        <li>Montant : Selon votre plan (3,000 / 6,000 / 15,000 FCFA)</li>
+                        <li>Confirmez le paiement</li>
+                        <li>Prenez une capture d'écran de la confirmation</li>
+                        <li>Envoyez la capture par WhatsApp au même numéro</li>
+                    </ol>
+                </div>
+
+                <p style="margin-top: 1.5rem; font-size: 0.95rem; opacity: 0.9;">
+                    ⚡ Activation sous 24h après vérification du paiement
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Referral Program -->
+    <section class="referral" id="parrainage">
+        <div class="referral-container">
+            <h2>Programme de Parrainage</h2>
+            <p>Gagnez des bonus en invitant vos amis à investir</p>
+            
+            <div class="referral-benefits">
+                <div class="referral-benefit">
+                    <h3>2%</h3>
+                    <p>Sur chaque dépôt de vos filleuls directs</p>
+                </div>
+                <div class="referral-benefit">
+                    <h3>Illimité</h3>
+                    <p>Parrainez autant d'amis que vous voulez</p>
+                </div>
+                <div class="referral-benefit">
+                    <h3>Instantané</h3>
+                    <p>Bonus crédité immédiatement après dépôt</p>
+                </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 15px; margin-top: 3rem;">
+                <h3 style="margin-bottom: 1rem;">Comment ça marche ?</h3>
+                <p style="font-size: 1.1rem; margin-bottom: 1rem;">1️⃣ Recevez votre code de parrainage unique<br>
+                2️⃣ Partagez-le avec vos amis et famille<br>
+                3️⃣ Ils s'inscrivent et investissent avec votre code<br>
+                4️⃣ Vous recevez 2% de leur dépôt initial !</p>
+                <p style="font-size: 0.95rem; opacity: 0.9;"><strong>Exemple:</strong> Votre ami dépose 10,000 FCFA → Vous gagnez 200 FCFA instantanément</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="section-header">
+            <h2>Comment Investir ?</h2>
+            <p>Commencez en 4 étapes simples</p>
+        </div>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h3>Inscrivez-vous</h3>
+                    <p>Créez votre compte gratuitement avec votre numéro de téléphone et pièce d'identité. Vérification rapide en 24h.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h3>Effectuez votre dépôt</h3>
+                    <p>Choisissez votre plan et déposez via Mobile Money, virement bancaire ou en espèces dans nos points de collecte.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h3>Suivez vos gains</h3>
+                    <p>Consultez votre tableau de bord pour voir vos revenus mensuels et l'activité de l'entreprise en temps réel.</p>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h3>Retirez vos profits</h3>
+                    <p>Retirez vos gains quotidiens ou hebdomadaires via la même méthode de paiement. <strong>Frais de retrait: 5%</strong> (appliqués automatiquement lors du transfert).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investment Modal -->
+    <div id="investModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('investModal')">&times;</button>
+            <h2>💼 Faire un Investissement</h2>
+            
+            <div id="investSuccess" class="success-message">
+                ✓ Demande d'investissement envoyée ! Nous vous contacterons dans les 24h pour finaliser.
+            </div>
+
+            <form id="investForm">
+                <div class="form-group">
+                    <label>Nom complet *</label>
+                    <input type="text" required placeholder="Jean Kouassi">
+                </div>
+
+                <div class="form-group">
+                    <label>Numéro de téléphone *</label>
+                    <input type="tel" required placeholder="+225 07 XX XX XX XX">
+                </div>
+
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="exemple@email.com (optionnel)">
+                </div>
+
+                <div class="form-group">
+                    <label>Plan d'investissement *</label>
+                    <select id="investPlan" required>
+                        <option value="">Sélectionnez un plan</option>
+                        <option value="debutant">Débutant - 3,000 FCFA (125 FCFA/jour)</option>
+                        <option value="standard">Standard - 6,000 FCFA (250 FCFA/jour)</option>
+                        <option value="premium">Premium - 15,000 FCFA (625 FCFA/jour)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Montant à investir (FCFA) *</label>
+                    <input type="number" id="investAmount" min="3000" step="1000" required placeholder="Minimum 3,000">
+                </div>
+
+                <div class="form-group">
+                    <label>Durée *</label>
+                    <select required>
+                        <option value="6" selected>6 mois (180 jours)</option>
+                    </select>
+                    <small style="color: #6b7280; display: block; margin-top: 0.5rem;">
+                        Tous nos plans ont une durée fixe de 6 mois
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label>Méthode de paiement</label>
+                    <div class="payment-methods-modal">
+                        <label class="payment-option selected">
+                            <input type="radio" name="payment" value="moov" checked required>
+                            <div>
+                                <strong>📱 Moov Money</strong>
+                                <p style="font-size: 0.9rem; color: #6b7280; margin: 0;">Paiement instantané</p>
+                            </div>
+                        </label>
+                    </div>
+                    <div style="background: #d1fae5; border: 2px solid #10b981; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                        <p style="margin: 0; color: #065f46; font-size: 0.95rem;">
+                            <strong>✅ Instructions de paiement :</strong><br>
+                            Après avoir soumis ce formulaire, envoyez <strong id="selectedAmount">3,000</strong> FCFA au numéro Moov Money :<br>
+                            <strong style="font-size: 1.2rem;">+225 07 00 00 00 00</strong><br>
+                            <small>Puis envoyez la capture d'écran par WhatsApp au même numéro</small>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Code de parrainage (optionnel)</label>
+                    <input type="text" placeholder="Ex: ABC123" style="text-transform: uppercase;">
+                    <small style="color: #6b7280;">Si un ami vous a invité, entrez son code</small>
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">Soumettre ma demande</button>
+            </form>
+
+            <p style="margin-top: 1.5rem; text-align: center; color: #6b7280; font-size: 0.9rem;">
+                Après soumission, notre équipe vous contactera pour finaliser le paiement et l'activation de votre investissement.
+            </p>
+            
+            <div style="background: #fef3c7; border: 2px solid #f59e0b; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                <p style="margin: 0; color: #92400e; font-size: 0.9rem;">
+                    <strong>📌 Important :</strong> Les frais de retrait de 5% sont automatiquement déduits lors de chaque retrait. Exemple : Retrait de 1,000 FCFA = Vous recevez 950 FCFA.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 FabricoInvest. Tous droits réservés.</p>
+        <p style="margin-top: 1rem; opacity: 0.8; font-size: 0.9rem;">
+            Investissement réglementé. Les rendements passés ne garantissent pas les résultats futurs.
+        </p>
+    </footer>
+
+    <script>
+        // Calculator
+        function updateCalculator() {
+            const amount = parseFloat(document.getElementById('calcAmount').value) || 0;
+            const duration = parseInt(document.getElementById('calcDuration').value) || 0;
+            
+            // Calcul basé sur 125 FCFA par jour pour 3000 FCFA sur 6 mois
+            // Ratio: 22500 / 3000 = 7.5 (soit 750% sur 6 mois)
+            // Par jour: 125 FCFA pour 3000 FCFA
+            const dailyRate = amount * (125 / 3000); // FCFA par jour
+            const daysInMonth = 30;
+            const totalDays = duration * daysInMonth;
+            const totalReturn = dailyRate * totalDays;
+            const monthlyReturn = dailyRate * daysInMonth;
+            
+            document.getElementById('calcResult').textContent = totalReturn.toFixed(0) + ' FCFA';
+            document.getElementById('calcDetails').textContent = `Soit ${dailyRate.toFixed(0)} FCFA par jour ou ${monthlyReturn.toFixed(0)} FCFA par mois`;
+        }
+
+        document.getElementById('calcAmount').addEventListener('input', updateCalculator);
+        document.getElementById('calcDuration').addEventListener('change', updateCalculator);
+        updateCalculator();
+
+        // Modal functions
+        function openInvestModal(e, planName = '') {
+            e.preventDefault();
+            document.getElementById('investModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (planName) {
+                const planSelect = document.getElementById('investPlan');
+                if (planName.includes('Débutant')) planSelect.value = 'debutant';
+                else if (planName.includes('Standard')) planSelect.value = 'standard';
+                else if (planName.includes('Premium')) planSelect.value = 'premium';
+            }
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close on outside click
+        document.getElementById('investModal').addEventListener('click', (e) => {
+            if (e.target.id === 'investModal') {
+                closeModal('investModal');
+            }
+        });
+
+        // Payment option selection
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+
+        // Form submission
+        document.getElementById('investForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const amount = document.getElementById('investAmount').value;
+            
+            if (amount < 3000) {
+                alert('Le montant minimum est de 3,000 FCFA');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                id: Date.now().toString(),
+                name: e.target.elements[0].value,
+                phone: e.target.elements[1].value,
+                email: e.target.elements[2].value || '',
+                plan: document.getElementById('investPlan').options[document.getElementById('investPlan').selectedIndex].text,
+                amount: parseInt(amount),
+                dailyReturn: amount * (125 / 3000), // Calculate based on ratio
+                referralCode: e.target.elements[6].value.toUpperCase() || '',
+                status: 'pending',
+                date: new Date().toISOString()
+            };
+
+            // Save to localStorage (admin can access this)
+            let investments = JSON.parse(localStorage.getItem('investments')) || [];
+            investments.push(formData);
+            localStorage.setItem('investments', JSON.stringify(investments));
+
+            // Show success message
+            document.getElementById('investSuccess').classList.add('active');
+            
+            setTimeout(() => {
+                document.getElementById('investSuccess').classList.remove('active');
+                e.target.reset();
+                alert(`✅ Demande envoyée avec succès !\n\n💳 PAIEMENT MOOV MONEY:\nNuméro: +225 07 00 00 00 00\nMontant: ${amount} FCFA\nNom: FabricoInvest\n\n📸 Après paiement:\n1. Prenez une capture d'écran\n2. Envoyez-la par WhatsApp au +225 07 00 00 00 00\n3. Activation sous 24h\n\n🎁 Votre code de parrainage sera envoyé après activation!`);
+                closeModal('investModal');
+            }, 2000);
+        });
+
+        // Update amount display when plan changes
+        document.getElementById('investPlan').addEventListener('change', function() {
+            const planAmounts = {
+                'debutant': '3,000',
+                'standard': '6,000',
+                'premium': '15,000'
+            };
+            const selectedPlan = this.value;
+            if (selectedPlan && planAmounts[selectedPlan]) {
+                document.getElementById('selectedAmount').textContent = planAmounts[selectedPlan];
+                document.getElementById('investAmount').value = planAmounts[selectedPlan].replace(',', '');
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
